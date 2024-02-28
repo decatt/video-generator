@@ -9,7 +9,11 @@
         function updateSliderValue(value, id) {
             document.getElementById(id).innerText = value;
         }
+        function showLoading() {
+            document.getElementById('infoArea').innerHTML = 'Loading...';
+        }
     </script>
+
     <style>
         /* CSS to adjust the size of the textarea */
         textarea {
@@ -19,12 +23,27 @@
             padding: 10px; /* Padding inside the textarea */
             box-sizing: border-box; /* Ensures padding does not increase the size */
         }
+
+        div#infoArea {
+            margin-top: 60px;
+            padding: 30px;
+            width: 400px;
+            font-size: 32px;
+            border: 2px solid #e81010;
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <h1>小说视频生成器</h1>
+
+    <!-- Information area -->
+    <div id="infoArea">
+        <!-- Dynamically display message_content from Flask -->
+        {{ message_content }}
+    </div>
    
-    <form action="/button-clicked" method="post">
+    <form action="/button-clicked" method="post" onsubmit="showLoading()">
         <label for="dropdown">音色：</label>
         <select name="dropdown">
             <option value="zh-CN-YunjianNeural">Yunjian</option>

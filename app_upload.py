@@ -16,7 +16,8 @@ async def save_voice(text, voice, rate, volume, output):
 
 @app.route('/')
 def home():
-    return render_template('upload.html')
+    message_content = "Please upload a file."
+    return render_template('upload.html', message_content=message_content)
 
 @app.route('/button-clicked', methods=['GET', 'POST'])
 def button_clicked():
@@ -29,17 +30,26 @@ def button_clicked():
         rate = f"+{rate_value}%" if rate_value >= 0 else f"{rate_value}%"
         
         text = ""
-        with open('uploads\\text.txt', 'r', encoding='utf-8') as f:
-            lines = f.readlines()
-            for line in lines:
-                line = line.strip().replace('\n', ' ') 
-                text += line + ' ' 
+        # for each .txt file in the uploads folder, read the text
+        for filename in os.listdir('uploads'):
+            if filename.endswith('.txt'):
+                with open(f'uploads/{filename}', 'r', encoding='utf-8') as f:
+                    lines = f.readlines()
+                    for line in lines:
+                        line = line.strip().replace('\n', ' ') 
+                        text += line + ' '
+            
+            output = f'static/{filename}.mp3'
 
-        asyncio.run(save_voice(text, voice, rate, volume, output))
+            asyncio.run(save_voice(text, voice, rate, volume, output))
 
-        return f"音色: {voice}, 音量: {volume}, 语速: {rate}, 文本: {text}"
+            text = ""
+
+        message_content = f"音色: {voice}, 音量: {volume}, 语速: {rate}, 文件已生成."
     else:
-        return "Method Not Allowed"
+        message_content = "Method Not Allowed"
+
+    return render_template('upload.html', message_content=message_content)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -49,11 +59,13 @@ def upload_file():
     if file.filename == '':
         return 'No selected file'
     if file and file.filename.endswith('.txt'):
-        filename = 'text.txt'
+        filename = file.filename
         file.save(os.path.join('uploads', filename))
-        return 'File has been uploaded and renamed to text.txt'
+        message_content = 'File has been uploaded and renamed to text.txt'
     else:
-        return 'Invalid file type, please upload a .txt file.'
+        message_content = 'Invalid file type, please upload a .txt file.'
+
+    return render_template('upload.html', message_content=message_content)
 
 if __name__ == '__main__':
     app.run(debug=True)
