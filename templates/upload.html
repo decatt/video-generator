@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <script>
+        // JavaScript function to update the slider value display
+        function updateSliderValue(value, id) {
+            document.getElementById(id).innerText = value;
+        }
+    </script>
+    <style>
+        /* CSS to adjust the size of the textarea */
+        textarea {
+            width: 100%; /* Full width of the container */
+            height: 200px; /* Fixed height */
+            font-size: 16px; /* Font size inside the textarea */
+            padding: 10px; /* Padding inside the textarea */
+            box-sizing: border-box; /* Ensures padding does not increase the size */
+        }
+    </style>
+</head>
+<body>
+    <h1>小说视频生成器</h1>
+   
+    <form action="/button-clicked" method="post">
+        <label for="dropdown">音色：</label>
+        <select name="dropdown">
+            <option value="zh-CN-YunjianNeural">Yunjian</option>
+            <option value="zh-CN-YunxiaNeural">Yunxia</option>
+            <option value="zh-CN-YunyangNeural">Yunyang</option>
+            <!-- Add more options as needed -->
+        </select>
+        <br>
+        <label for="volume">音量：</label>
+        <input type="range" name="volume" min="-100" max="100" value="0", onchange="updateSliderValue(this.value, 'volume')">
+        <span id="volume">0</span>
+        <br>
+        <label for="rate">语速：</label>
+        <input type="range" name="rate" min="-100" max="100" value="0", step="1", onchange="updateSliderValue(this.value, 'rate')">
+        <span id="rate">0</span>
+        <br><br> <!-- Just for spacing -->
+        
+        <br><br> <!-- Just for spacing -->
+        <button type="生成音频">Submit</button>
+
+        <br><br> <!-- Just for spacing -->
+        
+    </form>
+
+    <h2>Upload File</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload File">
+    </form>
+</body>
+</html>
