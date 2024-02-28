@@ -9,7 +9,7 @@ rate = '-4%'
 text = 'default_text'
 output = 'demo.mp3'
 
-async def save_voice():
+async def save_voice(text, voice, rate, volume, output):
     tts = edge_tts.Communicate(text = text,voice = voice,rate = rate,volume=volume)
     await tts.save(output)
 
@@ -29,7 +29,7 @@ def button_clicked():
         text_value = request.form.get('textinput', 'default_text')
         text = text_value       
 
-        asyncio.run(save_voice())
+        asyncio.run(save_voice(text, voice, rate, volume, output))
 
         return f"音色: {voice}, 音量: {volume}, 语速: {rate}, 文本: {text}"
     else:
