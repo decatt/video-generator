@@ -10,11 +10,20 @@
             document.getElementById(id).innerText = value;
         }
     </script>
+    <style>
+        /* CSS to adjust the size of the textarea */
+        textarea {
+            width: 100%; /* Full width of the container */
+            height: 200px; /* Fixed height */
+            font-size: 16px; /* Font size inside the textarea */
+            padding: 10px; /* Padding inside the textarea */
+            box-sizing: border-box; /* Ensures padding does not increase the size */
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Flask App!</h1>
-    <p>This is a simple example of using HTML with Python Flask.</p>
-    
+    <h1>小说视频生成器</h1>
+   
     <form action="/button-clicked" method="post">
         <label for="dropdown">音色：</label>
         <select name="dropdown">
@@ -34,7 +43,8 @@
         <br><br> <!-- Just for spacing -->
         
         <label for="textinput">输入文本：</label>
-        <input type="text" name="textinput" placeholder="Enter some text">
+        <br>
+        <textarea name="textinput" placeholder="Enter some text" style="width: 800px; height: 600px; font-size: 16px;" maxlength="4000"></textarea>
         
         <br><br> <!-- Just for spacing -->
         <button type="生成音频">Submit</button>
