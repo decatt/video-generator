@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <script>
+        // JavaScript function to update the slider value display
+        function updateSliderValue(value, id) {
+            document.getElementById(id).innerText = value;
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to My Flask App!</h1>
+    <p>This is a simple example of using HTML with Python Flask.</p>
+    
+    <form action="/button-clicked" method="post">
+        <label for="dropdown">音色：</label>
+        <select name="dropdown">
+            <option value="zh-CN-YunjianNeural">Yunjian</option>
+            <option value="zh-CN-YunxiaNeural">Yunxia</option>
+            <option value="zh-CN-YunyangNeural">Yunyang</option>
+            <!-- Add more options as needed -->
+        </select>
+        <br>
+        <label for="volume">音量：</label>
+        <input type="range" name="volume" min="-100" max="100" value="0", onchange="updateSliderValue(this.value, 'volume')">
+        <span id="volume">0</span>
+        <br>
+        <label for="rate">语速：</label>
+        <input type="range" name="rate" min="-100" max="100" value="0", step="1", onchange="updateSliderValue(this.value, 'rate')">
+        <span id="rate">0</span>
+        <br><br> <!-- Just for spacing -->
+        
+        <label for="textinput">输入文本：</label>
+        <input type="text" name="textinput" placeholder="Enter some text">
+        
+        <br><br> <!-- Just for spacing -->
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

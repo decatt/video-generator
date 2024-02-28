@@ -1,7 +1,7 @@
 import edge_tts
 import asyncio
 class MyTTS:
-    def __init__(self, text_path, output_name, voice = 'zh-CN-YunjianNeural', rate = '-4%', volume = '+0%'):
+    def __init__(self, text_path, output_name='demo', voice = 'zh-CN-YunjianNeural', rate = '-4%', volume = '+0%'):
         text = ""
         with open(text_path, 'r', encoding='utf-8') as f:
             lines = f.readlines()
