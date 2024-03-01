@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, flash
 import edge_tts
 import asyncio
 import os
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 voice = 'zh-CN-YunjianNeural'
 volume = '+0%'
 rate = '-4%'
 text = 'default_text'
 output = 'static\demo.mp3'
+uploads_dir = os.path.join(app.root_path, 'uploads')
 
 async def save_voice(text, voice, rate, volume, output):
     tts = edge_tts.Communicate(text = text,voice = voice,rate = rate,volume=volume)
@@ -54,18 +56,20 @@ def button_clicked():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
-        return 'No file part'
+        flash('No file part')
     file = request.files['file']
     if file.filename == '':
-        return 'No selected file'
+        flash('No selected file')
     if file and file.filename.endswith('.txt'):
         filename = file.filename
         file.save(os.path.join('uploads', filename))
-        message_content = 'File has been uploaded and renamed to text.txt'
+        message_content = 'File has been uploaded'
     else:
         message_content = 'Invalid file type, please upload a .txt file.'
 
-    return render_template('upload.html', message_content=message_content)
+    uploaded_files_name = os.listdir(uploads_dir)
+
+    return render_template('upload.html', message_content=message_content, uploaded_files_name=uploaded_files_name)
 
 if __name__ == '__main__':
     app.run(debug=True)
